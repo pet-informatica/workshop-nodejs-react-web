@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 export default class PostRow extends Component {
 
     render() {
-        const { _id, title, text, comments } = this.props.post
-
+        let { _id, title, text, comments } = this.props.post
+        if (text.length > 500)
+            text = text.substring(0, 500) + '...'
         return (
             <div>
                 <hr/>

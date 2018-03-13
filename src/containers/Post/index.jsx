@@ -26,6 +26,13 @@ export default class Post extends Component {
         this.setState({post})
     }
 
+    handleDelete = async (id) => {
+        await API.request(`/posts/${this.state.post._id}/comments/${id}`, 'DELETE')
+        let post = this.state.post
+        post.comments = post.comments.filter(comment => comment._id !== id)
+        this.setState({post})
+    }
+
     render() {
         if (this.state.loading)
             return (<Loading/>)
@@ -39,7 +46,7 @@ export default class Post extends Component {
                 <p>{text}</p>
                 <div style={{marginLeft: 20}}>
                     <h3>{`${comments.length} Comments`}</h3>
-                    {comments.map(comment => <CommentRow key={comment._id} comment={comment} />)}
+                    {comments.map(comment => <CommentRow key={comment._id} comment={comment} handleDelete={this.handleDelete}/>)}
                 </div>
                 <AddComment callback={this.addComment} postId={this.state.post._id}/>
             </div>
