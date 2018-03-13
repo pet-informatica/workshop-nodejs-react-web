@@ -5,6 +5,7 @@ import Post from './Post'
 import Admin from './Admin'
 
 export default class App extends Component {
+
   render() {
     return (
       <BrowserRouter>
@@ -13,9 +14,10 @@ export default class App extends Component {
           <small><Link to="/admin">Admin</Link></small>
           <Route exact path="/" component={Home}/>
           <Route path="/post/:id" component={Post}/>
-          <Route path="/admin" component={Admin}/>
+          <Route path="/admin/:id" component={Admin}/>
         </div>
       </BrowserRouter>
     )
   }
+  
 }

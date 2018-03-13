@@ -12,6 +12,10 @@ export default class PostRow extends Component {
                 <h3><Link to={`/post/${_id}`}>{title}</Link></h3>
                 <p>{text}</p>
                 <small><i>{`${comments.length} comments...`}</i></small>
+                <div>
+                    <small><Link to={`/admin/${_id}`}>Edit</Link></small>
+                    <small><button onClick={() => this.props.handleDelete(_id)}>Delete</button></small>
+                </div>
             </div>
         )
     }

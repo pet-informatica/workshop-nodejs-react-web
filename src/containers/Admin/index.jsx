@@ -4,17 +4,36 @@ import API from '../../lib/api'
 export default class Admin extends Component {
 
     state = {
+        _id: null,
         title: '',
         text: ''
     }
 
+    async componentDidMount() {
+        if (this.props.match.params.id) {
+            const id = this.props.match.params.id
+            const data = await API.request(`/posts/${id}`, 'GET')
+            const post = await data.json()
+            this.setState({
+                _id: post._id,
+                title: post.title,
+                text: post.text
+            })
+        }
+    }
+
     handleSubmit = async (ev) => {
         ev.preventDefault()
-        const post = {
+        let post = {
             title: this.state.title,
             text: this.state.text
         }
-        await API.request('/posts', 'POST', post)
+        if (this.state._id) {
+            post._id = this.state._id
+            await API.request(`/posts/${post._id}`, 'PUT', post)
+        } else {
+            await API.request('/posts', 'POST', post)
+        }
         this.setState({
             title: '',
             text: ''
@@ -28,7 +47,7 @@ export default class Admin extends Component {
     render() {
         return (
             <div>
-                <p>Create Post</p>
+                <p>{`${this.state._id ? 'Update':'Create'} Post`}</p>
                 <hr/>
                 <form onSubmit={this.handleSubmit}>
                     <label>

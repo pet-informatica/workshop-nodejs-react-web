@@ -17,13 +17,21 @@ export default class Home extends Component {
         this.setState({ loading, posts })
     }
 
+    handleDelete = async (id) => {
+        await API.request(`/posts/${id}`, 'DELETE')
+        const posts = this.state.posts.filter(post => post._id !== id)
+        this.setState({ posts })
+    }
+
     render() {
         if (this.state.loading)
             return (<Loading/>)
 
         return (
             <div>
-                {this.state.posts.map(post => <PostRow key={post._id} post={post} />)}
+                {this.state.posts.map(post => 
+                    <PostRow key={post._id} post={post} handleDelete={this.handleDelete} />
+                )}
             </div>
         )
     }
