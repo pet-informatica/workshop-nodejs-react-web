@@ -38,6 +38,7 @@ export default class Admin extends Component {
             title: '',
             text: ''
         })
+        this.props.history.push('/')
     }
 
     handleTitle = (ev) => this.setState({title: ev.target.value})
