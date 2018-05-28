@@ -37,18 +37,14 @@ export default class Post extends Component {
         if (this.state.loading)
             return (<Loading/>)
 
-        const { title, text, comments } = this.state.post
+        const { title, text, author } = this.state.post
 
         return (
             <div>
                 <hr/>
                 <h1>{title}</h1>
                 <p>{text}</p>
-                <div style={{marginLeft: 20}}>
-                    <h3>{`${comments.length} Comments`}</h3>
-                    {comments.map(comment => <CommentRow key={comment._id} comment={comment} handleDelete={this.handleDelete}/>)}
-                </div>
-                <AddComment callback={this.addComment} postId={this.state.post._id}/>
+                <small><i>{author}</i></small>
             </div>
         )
     }

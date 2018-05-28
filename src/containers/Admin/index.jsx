@@ -6,7 +6,8 @@ export default class Admin extends Component {
     state = {
         _id: null,
         title: '',
-        text: ''
+        text: '',
+        author: ''
     }
 
     async componentDidMount() {
@@ -17,7 +18,8 @@ export default class Admin extends Component {
             this.setState({
                 _id: post._id,
                 title: post.title,
-                text: post.text
+                text: post.text,
+                author: post.author
             })
         }
     }
@@ -26,7 +28,8 @@ export default class Admin extends Component {
         ev.preventDefault()
         let post = {
             title: this.state.title,
-            text: this.state.text
+            text: this.state.text,
+            author: this.state.author
         }
         if (this.state._id) {
             post._id = this.state._id
@@ -36,12 +39,15 @@ export default class Admin extends Component {
         }
         this.setState({
             title: '',
-            text: ''
+            text: '',
+            author: ''
         })
         this.props.history.push('/')
     }
 
     handleTitle = (ev) => this.setState({title: ev.target.value})
+
+    handleAuthor = (ev) => this.setState({author: ev.target.value})
 
     handleText = (ev) => this.setState({text: ev.target.value})
 
@@ -59,6 +65,11 @@ export default class Admin extends Component {
                     <label>
                         Text:
                         <textarea cols="30" rows="10" value={this.state.text} onChange={this.handleText}></textarea>
+                    </label>
+                    <br/>
+                    <label>
+                        Author:
+                        <input type="text" value={this.state.author} onChange={this.handleAuthor}/>
                     </label>
                     <br/>
                     <input type="submit" value="Submit"/>
